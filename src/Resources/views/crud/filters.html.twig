@@ -6,7 +6,9 @@
     {# browsers remove the query string when submitting forms using GET;
        that's why all query string parameters are added as hidden form fields #}
     {% for paramName, paramValue in form_action_query_string_as_array|ea_flatten_array %}
-        <input type="hidden" name="{{ paramName }}" value="{{ paramValue }}">
+        {% if not (paramName starts with 'filters[') %}
+            <input type="hidden" name="{{ paramName }}" value="{{ paramValue }}">
+        {% endif %}
     {% endfor %}
 
     {{ form_widget(filters_form) }}
